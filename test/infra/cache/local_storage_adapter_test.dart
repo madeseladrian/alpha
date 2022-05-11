@@ -34,4 +34,9 @@ void main() {
     await sut.fetchSecure(key);
     verify(() => secureStorage.read(key: key));
   });
+
+  test('2 - Should return correct value on success', () async {
+    final fetchedValue = await sut.fetchSecure(key);
+    expect(fetchedValue, key);
+  });
 }
