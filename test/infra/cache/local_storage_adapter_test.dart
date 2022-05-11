@@ -22,7 +22,8 @@ void main() {
 
   When mockFetchCall() => when(() => secureStorage.read(key: any(named: 'key')));
   void mockFetch(String? data) => mockFetchCall().thenAnswer((_) async => data);
-
+  void mockFetchError() => when(() => mockFetchCall().thenThrow(Exception()));
+  
   setUp(() {
     key = faker.lorem.word();
     secureStorage = FlutterSecureStorageSpy();
@@ -38,5 +39,11 @@ void main() {
   test('2 - Should return correct value on success', () async {
     final fetchedValue = await sut.fetchSecure(key);
     expect(fetchedValue, key);
+  });
+  
+  test('3 - Should throw if fetch secure throws', () async {
+    mockFetchError();
+    final future = sut.fetchSecure(key);
+    expect(future, throwsA(const TypeMatcher<Exception>()));
   });
 }
