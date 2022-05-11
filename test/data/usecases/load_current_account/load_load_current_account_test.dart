@@ -5,25 +5,8 @@ import 'package:test/test.dart';
 import 'package:alpha/domain/entities/entities.dart';
 import 'package:alpha/domain/helpers/helpers.dart';
 
-class LocalLoadCurrentAccount {
-  final FetchSecureCacheStorage fetchSecureCacheStorage;
-
-  LocalLoadCurrentAccount({required this.fetchSecureCacheStorage});
-
-  Future<AccountEntity> load() async {
-    try {
-      final token = await fetchSecureCacheStorage.fetchSecure('token');
-      if (token == null) throw Error();
-      return AccountEntity(token: token);
-    } catch (error) {
-      throw DomainError.unexpected;
-    }
-  }
-}
-
-abstract class FetchSecureCacheStorage {
-  Future<String?> fetchSecure(String key);
-}
+import 'package:alpha/data/cache/cache.dart';
+import 'package:alpha/data/usecases/usecases.dart';
 
 class FetchSecureCacheStorageSpy extends Mock implements FetchSecureCacheStorage {}
 
