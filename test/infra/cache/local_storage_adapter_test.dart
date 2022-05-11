@@ -3,15 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-class LocalStorageAdapter {
-  final FlutterSecureStorage secureStorage;
-
-  LocalStorageAdapter({required this.secureStorage});
-  
-  Future<String?> fetchSecure(String key) async {
-    return await secureStorage.read(key: key);
-  }
-}
+import 'package:alpha/infra/cache/cache.dart';
 
 class FlutterSecureStorageSpy extends Mock implements FlutterSecureStorage {}
 
@@ -23,7 +15,7 @@ void main() {
   When mockFetchCall() => when(() => secureStorage.read(key: any(named: 'key')));
   void mockFetch(String? data) => mockFetchCall().thenAnswer((_) async => data);
   void mockFetchError() => when(() => mockFetchCall().thenThrow(Exception()));
-  
+
   setUp(() {
     key = faker.lorem.word();
     secureStorage = FlutterSecureStorageSpy();
