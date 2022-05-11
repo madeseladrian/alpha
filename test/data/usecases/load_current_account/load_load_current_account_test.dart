@@ -1,3 +1,4 @@
+import 'package:alpha/domain/entities/entities.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -7,8 +8,9 @@ class LocalLoadCurrentAccount {
 
   LocalLoadCurrentAccount({required this.fetchSecureCacheStorage});
 
-  Future<void> load() async {
-    await fetchSecureCacheStorage.fetchSecure('token');
+  Future<AccountEntity> load() async {
+    final token = await fetchSecureCacheStorage.fetchSecure('token');
+    return AccountEntity(token: token);
   }
 }
 
@@ -36,5 +38,10 @@ void main() {
   test('1 - Should call FetchSecureCacheStorage with correct value', () async {
     await sut.load();
     verify(() => fetchSecureCacheStorage.fetchSecure('token'));
+  });
+
+  test('2 - Should return an AccountEntity', () async {
+    final account = await sut.load();
+    expect(account, AccountEntity(token: token));
   });
 }
