@@ -21,7 +21,7 @@ class GetxSplashPresenter {
       await loadCurrentAccount.load();
       _navigateTo.value = '/initial';
     } catch (error) {
-      
+      _navigateTo.value = '/main';
     }
   }
 }
@@ -36,7 +36,8 @@ void main() {
   When mockLoadCall() => when(() => loadCurrentAccount.load());
   void mockLoad({required AccountEntity account}) => 
     mockLoadCall().thenAnswer((_) async => account);
-  
+  void mockLoadError() => mockLoadCall().thenThrow(Exception());
+
   AccountEntity makeAccount() => AccountEntity(token: faker.guid.guid());
 
   setUp(() {
@@ -57,7 +58,11 @@ void main() {
   
   test('2 - Should go to initial page on success', () async {
     sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/initial')));
-
+    await sut.checkAccount(durationInSeconds: 0);
+  });
+    test('3,4 - Should go to main page on error', () async {
+    mockLoadError();
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/main')));
     await sut.checkAccount(durationInSeconds: 0);
   });
 }
