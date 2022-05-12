@@ -1,30 +1,11 @@
 import 'package:faker/faker.dart';
-import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import 'package:alpha/domain/entities/entities.dart';
 import 'package:alpha/domain/usecases/usecases.dart';
 
-class GetxSplashPresenter {
-  final LoadCurrentAccount loadCurrentAccount;
-
-  GetxSplashPresenter({required this.loadCurrentAccount});
-
-  final _navigateTo = Rx<String?>(null);
-
-  Stream<String?> get navigateToStream => _navigateTo.stream;
-
-  Future<void> checkAccount({int durationInSeconds = 2}) async {
-    await Future.delayed(Duration(seconds: durationInSeconds));
-    try {
-      await loadCurrentAccount.load();
-      _navigateTo.value = '/initial';
-    } catch (error) {
-      _navigateTo.value = '/main';
-    }
-  }
-}
+import 'package:alpha/presentation/presenters/presenters.dart';
 
 class LoadCurrentAccountSpy extends Mock implements LoadCurrentAccount {}
 
