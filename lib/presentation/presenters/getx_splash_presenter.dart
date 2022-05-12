@@ -1,16 +1,19 @@
 import 'package:get/get.dart';
 
 import '../../domain/usecases/usecases.dart';
+import '../../ui/pages/pages.dart';
 
-class GetxSplashPresenter {
+class GetxSplashPresenter implements SplashPresenter {
   final LoadCurrentAccount loadCurrentAccount;
 
   GetxSplashPresenter({required this.loadCurrentAccount});
 
   final _navigateTo = Rx<String?>(null);
 
+  @override
   Stream<String?> get navigateToStream => _navigateTo.stream;
 
+  @override
   Future<void> checkAccount({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {

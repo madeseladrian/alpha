@@ -12,6 +12,7 @@ class SplashPage extends StatelessWidget with NavigationManager {
   Widget build(BuildContext context) {
     presenter.checkAccount();
     return Scaffold(
+      backgroundColor: const Color(0xFFFAFAFA),
       body: Builder(
         builder: (context) {
           handleNavigation(presenter.navigateToStream);
@@ -21,16 +22,17 @@ class SplashPage extends StatelessWidget with NavigationManager {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(''),
-                const CircleAvatar(
-                  radius: 38,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage('assets/images/alphapay.png')
+                const Image(
+                  width: 90,
+                  height: 90,  
+                  image: AssetImage('assets/images/alphapay.png')
                 ),
                 Column(
                   children: [
                     const Text(
                       'from',
                       style:TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 14.0,
                         color: Colors.grey
                       ),
@@ -38,7 +40,7 @@ class SplashPage extends StatelessWidget with NavigationManager {
                     Padding(
                       padding: const EdgeInsets.only(top: 6.0, bottom: 8.0),
                       child: Text(
-                        'Alphapay',
+                        'AlphaPay',
                         style:TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
